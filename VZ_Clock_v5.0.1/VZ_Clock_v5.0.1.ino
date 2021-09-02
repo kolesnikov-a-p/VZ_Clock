@@ -862,7 +862,7 @@ void runService(){
       if(MQTTclient.connected()){
         for(byte i=0;i<8;i++){
           if(senss.sensors[i]&&String(mqtts.mqtt_pub_sensors[i]) != ""){
-            MQTTclient.publish(mqtts.mqtt_pub_sensors[i], String(data[i]).c_str());
+            MQTTclient.publish(mqtts.mqtt_pub_sensors[i], String(data[i]).c_str(), true);
             if(senss.printCom){
               printTime();
               Serial.println("Publish sensors["+String(i)+"]: "+String(data[i]));
@@ -2747,7 +2747,7 @@ void sgp30(){
   }
   String livelCo2=tAlarm+sgpCo2Message[sgpCo2Livel]+" eCO2="+String(sgpCo2)+" ppm               ";
   if(sgpCo2Livel>=sgps.sgpCo2LivelAlarm){
-    if(sgps.eCo2AlarmMqtt&&WIFI_connected) MQTTclient.publish(mqtts.mqtt_sub_inform,livelCo2.c_str());
+    if(sgps.eCo2AlarmMqtt&&WIFI_connected) MQTTclient.publish(mqtts.mqtt_sub_inform,livelCo2.c_str(), true);
     if(sgps.eCo2AlarmEsp){
       for(byte i=0;i<4;i++){bip();}
       clr(leds.NUM_VER_X);
@@ -2756,7 +2756,7 @@ void sgp30(){
   }
   String livelTvoc=tAlarm+sgpTvocMessage[sgpTvocLivel]+" TVOC="+String(sgpTvoc)+" ppb               ";
   if(sgpTvocLivel>=sgps.sgpTvocLivelAlarm){
-    if(sgps.tvocAlarmMqtt&&WIFI_connected)MQTTclient.publish(mqtts.mqtt_sub_inform,livelTvoc.c_str());
+    if(sgps.tvocAlarmMqtt&&WIFI_connected)MQTTclient.publish(mqtts.mqtt_sub_inform,livelTvoc.c_str(), true);
     if(sgps.tvocAlarmEsp){
       for(byte i=0;i<4;i++){bip();}
       clr(leds.NUM_VER_X);
